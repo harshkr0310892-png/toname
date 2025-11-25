@@ -282,17 +282,30 @@ const Academics = () => {
             transition={{ duration: 0.6 }}
             className="text-center px-2 sm:px-0"
           >
-            <Link to="/curriculum-guide">
-              <button 
-                className="curriculum-btn"
-                onClick={() => console.log('Curriculum Guide button clicked')}
-              >
-                <span>View Curriculum Guide</span>
-                <span className="transition-transform duration-300">
-                  →
-                </span>
-              </button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/curriculum-guide">
+                <button 
+                  className="curriculum-btn"
+                  onClick={() => console.log('Curriculum Guide button clicked')}
+                >
+                  <span>View Curriculum Guide</span>
+                  <span className="transition-transform duration-300">
+                    →
+                  </span>
+                </button>
+              </Link>
+              <Link to="/holiday">
+                <button 
+                  className="curriculum-btn bg-gradient-to-r from-gold/20 to-yellow-500/20 border border-gold/30 hover:from-gold/30 hover:to-yellow-500/30"
+                  onClick={() => console.log('Holidays button clicked')}
+                >
+                  <span>View Holidays</span>
+                  <span className="transition-transform duration-300">
+                    →
+                  </span>
+                </button>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>

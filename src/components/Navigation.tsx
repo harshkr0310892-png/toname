@@ -231,7 +231,8 @@ const Navigation = () => {
     { name: t("gallery"), path: "/gallery", icon: Camera, description: t("galleryDesc") },
     { name: t("topScorers"), path: "/top-scorers", icon: Trophy, description: t("topScorersDesc") },
     { name: t("events"), path: "/events", icon: Calendar, description: t("eventsDesc") },
-    { name: t("syllabus"), path: "/syllabus", icon: BookOpen, description: "Curriculum guides and syllabus documents" }
+    { name: t("syllabus"), path: "/syllabus", icon: BookOpen, description: "Curriculum guides and syllabus documents" },
+    { name: "Holidays", path: "/holiday", icon: Calendar, description: "View upcoming holidays and breaks" }
   ];
 
   // Calculate dynamic opacity and blur based on scroll position

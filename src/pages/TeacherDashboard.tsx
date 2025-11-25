@@ -1904,7 +1904,9 @@ Student ID: ${studentId}`);
                   { title: "Create Student ID", desc: "Register new students", icon: UserPlus, action: () => setActiveSection("createstudent") },
                   { title: "View Students", desc: "Manage student records", icon: Users, action: () => setActiveSection("students") },
                   { title: "Add Remarks", desc: "Give good/bad remarks", icon: MessageSquare, action: () => setActiveSection("remarks") },
-                  { title: "Fee Management", desc: "Manage student fees", icon: CreditCard, action: () => setActiveSection("fees") }
+                  { title: "Fee Management", desc: "Manage student fees", icon: CreditCard, action: () => setActiveSection("fees") },
+                  { title: "Syllabus", desc: "View syllabus", icon: BookOpen, action: () => window.open('/syllabus', '_blank') },
+                  { title: "Holidays", desc: "View holidays", icon: Calendar, action: () => window.open('/holiday', '_blank') }
                 ].map((item, index) => (
                   <motion.div
                     key={item.title}

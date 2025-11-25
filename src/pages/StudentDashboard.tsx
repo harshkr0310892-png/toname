@@ -472,7 +472,13 @@ const StudentDashboard = () => {
             // Write to Supabase for real-time sync
             await setSupabaseData('royal-academy-payment-requests', allPaymentRequests);
 
-            alert(`✅ Payment Successful!\n\nPayment ID: ${response.razorpay_payment_id}\nAmount: ₹${selectedPaymentRequest.amount}\nMonths: ${selectedPaymentRequest.months.join(', ')}\n\nYour fees have been updated.`);
+            alert(`✅ Payment Successful!
+
+Payment ID: ${response.razorpay_payment_id}
+Amount: ₹${selectedPaymentRequest.amount}
+Months: ${selectedPaymentRequest.months.join(', ')}
+
+Your fees have been updated.`);
             
             setShowPaymentModal(false);
             setSelectedPaymentRequest(null);
@@ -1085,6 +1091,8 @@ const StudentDashboard = () => {
                 { title: "AI Quiz", desc: "Practice quizzes", icon: GraduationCap, action: () => navigate('/student-quiz') },
                 { title: "Track Bus", desc: "Live bus tracking", icon: MapPin, action: () => navigate('/student-track-bus') },
                 { title: "Fees", desc: "Manage fees", icon: CreditCard, action: () => setActiveSection("fees") },
+                { title: "Syllabus", desc: "View syllabus", icon: BookOpen, action: () => navigate('/syllabus') },
+                { title: "Holidays", desc: "View holidays", icon: Calendar, action: () => navigate('/holiday') },
                 { title: "Principal Remarks", desc: "Remarks from principal", icon: Star, action: () => setShowPrincipalRemarksModal(true) }
               ].map((item, index) => (
                 <motion.div

@@ -58,6 +58,7 @@ const YearlyBookManager = lazy(() => import("@/components/YearlyBookManager"));
 const ExamRoutineManager = lazy(() => import("@/components/ExamRoutineManager"));
 const TopScorersLearnMoreManager = lazy(() => import("@/components/TopScorersLearnMoreManager"));
 const SyllabusManager = lazy(() => import("@/components/SyllabusManager"));
+const HolidayManager = lazy(() => import("@/components/HolidayManager"));
 
 // Notification interfaces
 interface Notification {
@@ -207,7 +208,7 @@ interface TeacherRecord {
 const PrincipalDashboard = () => {
   const [principalEmail, setPrincipalEmail] = useState("");
   // Restore active section from sessionStorage on mount
-  const [activeSection, setActiveSection] = useState<"dashboard" | "teachers" | "homepage" | "courses" | "gallery" | "about" | "announcements" | "admissions" | "topscorers" | "createteacherid" | "manageteachers" | "manageteacherid" | "pricemanagement" | "timetable" | "admissionsmanager" | "branding" | "events" | "categories" | "academicsmanager" | "facilitiesmanager" | "booksmanager" | "examroutine" | "contactforms" | "topscorerslearnmore" | "syllabus">(() => {
+  const [activeSection, setActiveSection] = useState<"dashboard" | "teachers" | "homepage" | "courses" | "gallery" | "about" | "announcements" | "admissions" | "topscorers" | "createteacherid" | "manageteachers" | "manageteacherid" | "pricemanagement" | "timetable" | "admissionsmanager" | "branding" | "events" | "categories" | "academicsmanager" | "facilitiesmanager" | "booksmanager" | "examroutine" | "contactforms" | "topscorerslearnmore" | "syllabus" | "holidays">(() => {
     const saved = sessionStorage.getItem('principalActiveSection');
     return (saved as any) || "dashboard";
   });
@@ -1339,6 +1340,7 @@ Teacher ID: ${teacherId}`);
     { icon: Clock, label: "Manage Timetable", color: "from-sky-400 to-purple-600", action: () => setActiveSection("timetable") },
     { icon: GraduationCap, label: "Edit Admissions Page", color: "from-blue-600 to-purple-600", action: () => setActiveSection("admissionsmanager") },
     { icon: Trophy, label: "Top Scorers Content", color: "from-sky-400 to-purple-600", action: () => setActiveSection("topscorerslearnmore") },
+    { icon: Calendar, label: "Manage Holidays", color: "from-blue-600 to-purple-600", action: () => setActiveSection("holidays") },
     // New quick actions for Bus Tracking IDs
     { icon: IdCard, label: "Create Bus ID", color: "from-blue-600 to-purple-600", action: () => navigate('/create-bus-id') },
     { icon: IdCard, label: "Manage Bus IDs", color: "from-sky-400 to-purple-600", action: () => navigate('/manage-bus-id') }
@@ -2445,6 +2447,33 @@ Teacher ID: ${teacherId}`);
                 </div>
                 <Suspense fallback={<RouteLoader />}>
                   <SyllabusManager />
+                </Suspense>
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === "holidays" && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mt-8"
+            >
+              <div className="bg-card/95 backdrop-blur-md rounded-xl p-6 border border-border/50">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-lg font-heading font-bold text-foreground">
+                    Holiday Management
+                  </h2>
+                  <Button
+                    variant="outline"
+                    onClick={() => setActiveSection("dashboard")}
+                    size="sm"
+                  >
+                    Back to Dashboard
+                  </Button>
+                </div>
+                <Suspense fallback={<RouteLoader />}>                  
+                  <HolidayManager />
                 </Suspense>
               </div>
             </motion.div>

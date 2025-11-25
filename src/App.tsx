@@ -72,6 +72,7 @@ const CreateBusID = lazy(() => import("./pages/CreateBusID"));
 const ManageBusID = lazy(() => import("./pages/ManageBusID"));
 const StudentTrackBus = lazy(() => import("./pages/StudentTrackBus"));
 const Syllabus = lazy(() => import("./pages/Syllabus"));
+const Holiday = lazy(() => import("./pages/Holiday"));
 
 const queryClient = new QueryClient();
 
@@ -721,6 +722,16 @@ function AnimatedRoutes() {
               transition={{ duration: 0 }}
             >
               <Syllabus />
+            </motion.div>
+          } />
+          <Route path="/holiday" element={
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0 }}
+            >
+              <Holiday />
             </motion.div>
           } />
           <Route path="/student-auth" element={<Navigate to="/student-login" replace />} />
