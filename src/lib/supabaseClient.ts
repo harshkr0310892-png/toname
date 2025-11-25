@@ -8,9 +8,9 @@ import { createClient } from "@supabase/supabase-js";
 const _env = (import.meta as any).env ?? {};
 
 // User-provided public creds (anon key is safe for client usage)
-const FALLBACK_SUPABASE_URL = "https://xrabfltzkjlygiqtmhml.supabase.co";
+const FALLBACK_SUPABASE_URL = "http://127.0.0.1:54321";
 const FALLBACK_SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyYWJmbHR6a2pseWdpcXRtaG1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4MjQzNzEsImV4cCI6MjA3OTQwMDM3MX0.7P8Gn2KCWzvQb9Jr6TfBIN-WpRAIXRWynGjv9AsJ2nw";
+  "sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH";
 export const supabaseUrl: string =
   _env.VITE_SUPABASE_URL ?? FALLBACK_SUPABASE_URL;
 export const supabaseAnonKey: string =

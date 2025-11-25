@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button-variants";
 import ShinyText from "@/components/ShinyText";
-import TextType from "@/components/TextType";
+imprt TextType from "@/components/TextType";
 import Squares from "@/components/Squares";
 
 interface AboutPageData {
@@ -491,34 +491,4 @@ const About = () => {
                         key={photoIndex}
                         src={photo}
                         alt={`${staff.name} ${photoIndex + 2}`}
-                        className="w-full h-14 sm:h-16 object-cover rounded-lg border-2 border-gold/30"
-                      />
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Scroll to Top Button */}
-      {showScrollTop && (
-        <motion.button
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0 }}
-          onClick={scrollToTop}
-          className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 p-3 sm:p-3.5 rounded-full bg-gold hover:bg-gold/90 text-black shadow-lg hover:shadow-xl transition-all duration-300"
-          aria-label="Scroll to top"
-        >
-          <ArrowUp className="h-5 w-5 sm:h-6 sm:w-6" />
-        </motion.button>
-      )}
-
-      <Footer />
-    </div>
-  );
-};
-
-export default About;
+                        c
