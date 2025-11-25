@@ -24,6 +24,9 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 
+// Import the Supabase helper
+import { setSupabaseData, getSupabaseData } from "@/lib/supabaseHelpers";
+
 interface HomepageData {
   // Hero Section
   heroTitle: string;
@@ -132,44 +135,93 @@ const HomepageEditor = () => {
   const [message, setMessage] = useState("");
   const [showPreview, setShowPreview] = useState(false);
 
-  // Load data from localStorage on mount
+  // Load data from localStorage on mount (fallback)
   useEffect(() => {
-    const savedData = localStorage.getItem('royal-academy-homepage');
-    if (savedData) {
-      const parsedData = JSON.parse(savedData);
-      setHomepageData({
-        ...homepageData,
-        ...parsedData,
-        stats: {
-          students: parsedData.stats?.students || homepageData.stats.students,
-          programs: parsedData.stats?.programs || homepageData.stats.programs,
-          awards: parsedData.stats?.awards || homepageData.stats.awards
-        },
-        values: {
-          excellence: parsedData.values?.excellence || homepageData.values.excellence,
-          innovation: parsedData.values?.innovation || homepageData.values.innovation,
-          vision: parsedData.values?.vision || homepageData.values.vision,
-          community: parsedData.values?.community || homepageData.values.community
-        },
-        colors: {
-          primary: parsedData.colors?.primary || homepageData.colors.primary,
-          secondary: parsedData.colors?.secondary || homepageData.colors.secondary,
-          accent: parsedData.colors?.accent || homepageData.colors.accent,
-          background: parsedData.colors?.background || homepageData.colors.background,
-          text: parsedData.colors?.text || homepageData.colors.text
-        },
-        fonts: {
-          heading: parsedData.fonts?.heading || homepageData.fonts.heading,
-          body: parsedData.fonts?.body || homepageData.fonts.body
-        }
-      });
-    }
+    const loadData = async () => {
+      try {
+        // Load from Supabase with fallback to localStorage
+        const data = await getSupabaseData('ramakrishna-mission-homepage', {
+          // Hero Section
+          heroTitle: "Ramakrishna mission",
+          heroSubtitle: "Shaping tomorrow's leaders through excellence in education, character development, and innovative learning experiences.",
+          heroButtonPrimary: "Apply for Admission",
+          heroButtonSecondary: "Discover Our Legacy",
+          bannerImages: [],
+          autoRotate: true,
+          rotationInterval: 3,
+          
+          // Statistics
+          stats: {
+            students: { number: "2,500+", label: "Students" },
+            programs: { number: "150+", label: "Programs" },
+            awards: { number: "25+", label: "Awards" }
+          },
+          
+          // About Section
+          aboutTitle: "About Ramakrishna mission",
+          aboutSubtitle: "Established in 1875, Ramakrishna mission has been a beacon of educational excellence for over 148 years, nurturing minds and shaping the future of countless students.",
+          legacyTitle: "Our Legacy",
+          legacyContent: "Founded by visionary educators, Ramakrishna mission began as a small institution with big dreams. Today, we stand as one of the nation's premier educational establishments, combining time-honored traditions with innovative approaches to learning.\n\nOur commitment to excellence extends beyond academics. We believe in developing well-rounded individuals who are prepared to make meaningful contributions to society.",
+          missionTitle: "Our Mission",
+          missionContent: "To provide exceptional education that empowers students to achieve their highest potential, fostering critical thinking, creativity, and moral leadership in a rapidly changing world.",
+          
+          // Values Section
+          values: {
+            excellence: {
+              title: "Excellence",
+              description: "Committed to the highest standards in education and character development."
+            },
+            innovation: {
+              title: "Innovation",
+              description: "Embracing cutting-edge teaching methods and technological advancement."
+            },
+            vision: {
+              title: "Vision",
+              description: "Preparing students to become global leaders and responsible citizens."
+            },
+            community: {
+              title: "Community",
+              description: "Building strong bonds within our diverse and inclusive school family."
+            }
+          },
+          
+          // Styling
+          colors: {
+            primary: "#1e40af", // royal blue
+            secondary: "#f59e0b", // gold
+            accent: "#10b981", // emerald
+            background: "#ffffff",
+            text: "#1f2937"
+          },
+          
+          fonts: {
+            heading: "Inter",
+            body: "Inter"
+          }
+        });
+        
+        setHomepageData(data);
+      } catch (error) {
+        console.error("Error loading homepage data:", error);
+        // Fallback to default data
+      }
+    };
+    
+    loadData();
   }, []);
 
-  const saveData = () => {
-    localStorage.setItem('royal-academy-homepage', JSON.stringify(homepageData));
-    setMessage("Homepage updated successfully!");
-    setTimeout(() => setMessage(""), 3000);
+  const saveData = async () => {
+    try {
+      // Save to Supabase (which also saves to localStorage)
+      await setSupabaseData('ramakrishna-mission-homepage', homepageData);
+      
+      setMessage("Homepage updated successfully!");
+      setTimeout(() => setMessage(""), 3000);
+    } catch (error) {
+      console.error("Error saving homepage data:", error);
+      setMessage("Error saving homepage data. Please try again.");
+      setTimeout(() => setMessage(""), 3000);
+    }
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -322,7 +374,7 @@ const HomepageEditor = () => {
           <div className="bg-card border border-border rounded-lg p-4 sm:p-6">
             <h3 className="text-base sm:text-lg font-semibold mb-4">Statistics</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              {Object.entries(homepageData.stats).map(([key, stat]) => (
+              {homepageData.stats && Object.entries(homepageData.stats).map(([key, stat]) => (
                 <div key={key} className="space-y-2">
                   <label className="text-sm font-medium block capitalize">{key}</label>
                   <div className="grid grid-cols-2 gap-2">
@@ -402,7 +454,7 @@ const HomepageEditor = () => {
           <div className="bg-card border border-border rounded-lg p-6">
             <h3 className="text-lg font-semibold mb-4">Core Values</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {Object.entries(homepageData.values).map(([key, value]) => (
+              {homepageData.values && Object.entries(homepageData.values).map(([key, value]) => (
                 <div key={key} className="space-y-2">
                   <label className="text-sm font-medium block capitalize">{key}</label>
                   <Input
@@ -437,7 +489,7 @@ const HomepageEditor = () => {
               Color Scheme
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-              {Object.entries(homepageData.colors).map(([key, color]) => (
+              {homepageData.colors && Object.entries(homepageData.colors).map(([key, color]) => (
                 <div key={key} className="space-y-2">
                   <label className="text-sm font-medium block capitalize">{key}</label>
                   <div className="flex items-center space-x-2">

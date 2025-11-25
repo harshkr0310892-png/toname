@@ -61,7 +61,7 @@ const About = () => {
 
   // Load data from localStorage (managed by Principal Dashboard)
   useEffect(() => {
-    const savedData = localStorage.getItem('ramakrishna-mission-about');
+    const savedData = localStorage.getItem('royal-academy-about');
     if (savedData) {
       try {
         setAboutData(JSON.parse(savedData));
@@ -95,9 +95,9 @@ const About = () => {
 
   // Default data function
   const getDefaultData = (): AboutPageData => ({
-    heroTitle: "About Ramakrishna Mission",
+    heroTitle: "About Royal Academy",
     heroSubtitle: "Excellence in Education Since 1875",
-    heroDescription: "Ramakrishna Mission has been a beacon of educational excellence for over 148 years, nurturing minds and shaping the future of countless students through innovative teaching and character development.",
+    heroDescription: "Royal Academy has been a beacon of educational excellence for over 148 years, nurturing minds and shaping the future of countless students through innovative teaching and character development.",
     historyTitle: "Our Rich History",
     historyContent: "Founded in 1875 by visionary educators, Royal Academy began as a small institution with big dreams. Over nearly 150 years, we have grown into one of the nation's premier educational establishments, combining time-honored traditions with innovative approaches to learning.",
     foundedYear: "1875",
@@ -112,15 +112,15 @@ const About = () => {
       community: { title: "Community", description: "We foster a supportive, inclusive environment where everyone can thrive and contribute." }
     },
     leadershipTitle: "Principal and Teacher Section",
-    leadershipDescription: "Meet our dedicated leadership team and faculty members who guide Ramakrishna Mission towards excellence in education.",
+    leadershipDescription: "Meet our dedicated leadership team and faculty members who guide Royal Academy towards excellence in education.",
     staffMembers: [
       {
         id: "principal-1",
         name: "Dr. Sarah Johnson",
         position: "Principal",
-        description: "Dr. Sarah Johnson brings over 20 years of educational leadership experience to Ramakrishna Mission.",
-        photos: ["/placeholder-image.svg"],
-        email: "principal@ramakrishnamission.edu",
+        description: "Dr. Sarah Johnson brings over 20 years of educational leadership experience to Royal Academy.",
+        photos: ["https://images.unsplash.com/photo-1494790108755-2616c669-b163?w=400&h=400&fit=crop&crop=face&auto=format&q=80"],
+        email: "principal@royalacademy.edu",
         phone: "+1 (555) 123-4567",
         qualifications: "Ph.D. in Educational Administration",
         experience: "20+ years in educational leadership"
@@ -265,7 +265,7 @@ const About = () => {
               <div className="space-y-3 sm:space-y-4">
                 <h3 className="text-xl sm:text-2xl font-heading font-semibold text-gradient-royal">{aboutData.missionTitle}</h3>
                 <div className="text-base sm:text-lg text-muted-foreground italic bg-card/50 p-5 sm:p-6 rounded-lg border border-border">
-                  <ShinyText text={aboutData.missionContent} speed={4} />
+                  "<ShinyText text={aboutData.missionContent} speed={4} />"
                 </div>
               </div>
             </motion.div>

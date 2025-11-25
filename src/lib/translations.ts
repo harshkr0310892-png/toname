@@ -154,6 +154,7 @@ export const translations = {
     "pending": "Pending",
     "approved": "Approved",
     "rejected": "Rejected",
+    "syllabus": "Syllabus"
   },
   hi: {
     // Navigation
@@ -310,6 +311,7 @@ export const translations = {
     "pending": "लंबित",
     "approved": "अनुमोदित",
     "rejected": "अस्वीकृत",
+    "syllabus": "पाठ्यक्रम"
   }
 };
 

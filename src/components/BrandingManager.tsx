@@ -77,8 +77,10 @@ const BrandingManager = () => {
       await setSupabaseData('royal-academy-branding', brandingData);
       setSuccess(true);
       
-      // Update all components that use branding data
-      window.dispatchEvent(new CustomEvent('branding-updated'));
+      // Dispatch a custom event for immediate updates
+      window.dispatchEvent(new CustomEvent('branding-updated', { 
+        detail: brandingData 
+      }));
       
       // Hide success message after 3 seconds
       setTimeout(() => setSuccess(false), 3000);

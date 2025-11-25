@@ -57,6 +57,7 @@ const FacilitiesManager = lazy(() => import("@/components/FacilitiesManager"));
 const YearlyBookManager = lazy(() => import("@/components/YearlyBookManager"));
 const ExamRoutineManager = lazy(() => import("@/components/ExamRoutineManager"));
 const TopScorersLearnMoreManager = lazy(() => import("@/components/TopScorersLearnMoreManager"));
+const SyllabusManager = lazy(() => import("@/components/SyllabusManager"));
 
 // Notification interfaces
 interface Notification {
@@ -206,7 +207,7 @@ interface TeacherRecord {
 const PrincipalDashboard = () => {
   const [principalEmail, setPrincipalEmail] = useState("");
   // Restore active section from sessionStorage on mount
-  const [activeSection, setActiveSection] = useState<"dashboard" | "teachers" | "homepage" | "courses" | "gallery" | "about" | "announcements" | "admissions" | "topscorers" | "createteacherid" | "manageteachers" | "manageteacherid" | "pricemanagement" | "timetable" | "admissionsmanager" | "branding" | "events" | "categories" | "academicsmanager" | "facilitiesmanager" | "booksmanager" | "examroutine" | "contactforms" | "topscorerslearnmore">(() => {
+  const [activeSection, setActiveSection] = useState<"dashboard" | "teachers" | "homepage" | "courses" | "gallery" | "about" | "announcements" | "admissions" | "topscorers" | "createteacherid" | "manageteachers" | "manageteacherid" | "pricemanagement" | "timetable" | "admissionsmanager" | "branding" | "events" | "categories" | "academicsmanager" | "facilitiesmanager" | "booksmanager" | "examroutine" | "contactforms" | "topscorerslearnmore" | "syllabus">(() => {
     const saved = sessionStorage.getItem('principalActiveSection');
     return (saved as any) || "dashboard";
   });
@@ -1853,6 +1854,7 @@ Teacher ID: ${teacherId}`);
                       { title: "View Admissions", desc: "Review submitted applications", icon: FileText, action: () => setActiveSection("admissions") },
                       { title: "Manage Top Scorers", desc: "Edit students, rankings, and categories", icon: Trophy, action: () => setActiveSection("topscorers") },
                       { title: "Yearly Books Manager", desc: "Manage recommended books for classes", icon: BookOpen, action: () => setActiveSection("booksmanager") },
+                      { title: "Upload Syllabus", desc: "Upload curriculum guides for classes 1-12", icon: BookOpen, action: () => setActiveSection("syllabus") },
                       { title: "Create New Teacher ID", desc: "Generate teacher login credentials", icon: UserPlus, action: () => setActiveSection("createteacherid") },
                       { title: "Manage Teacher IDs", desc: "View and manage teacher login credentials", icon: IdCard, action: () => setActiveSection("manageteacherid") },
                       { title: "Price Management", desc: "Update admission fees and pricing", icon: DollarSign, action: () => setActiveSection("pricemanagement") }
@@ -2416,6 +2418,33 @@ Teacher ID: ${teacherId}`);
                 </div>
                 <Suspense fallback={<RouteLoader />}>
                   <ExamRoutineManager />
+                </Suspense>
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === "syllabus" && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mt-8"
+            >
+              <div className="bg-card/95 backdrop-blur-md rounded-xl p-6 border border-border/50">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-lg font-heading font-bold text-foreground">
+                    Syllabus Management
+                  </h2>
+                  <Button
+                    variant="outline"
+                    onClick={() => setActiveSection("dashboard")}
+                    size="sm"
+                  >
+                    Back to Dashboard
+                  </Button>
+                </div>
+                <Suspense fallback={<RouteLoader />}>
+                  <SyllabusManager />
                 </Suspense>
               </div>
             </motion.div>

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, GraduationCap, BookOpen, Users, Calendar, Mail, LogIn, Home, Building, Camera, Trophy, Bell, Eye, Globe, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./ui/button-variants";
-import { getSupabaseData } from "@/lib/supabaseHelpers";
+import { getSupabaseData, subscribeToSupabaseChanges } from "@/lib/supabaseHelpers";
 import { useTranslation } from "@/hooks/useTranslation";
 
 const Navigation = () => {
@@ -60,7 +60,7 @@ const Navigation = () => {
 
   // Load branding data from Supabase
   useEffect(() => {
-    getSupabaseData('ramakrishna-mission-branding', {
+    getSupabaseData('royal-academy-branding', {
       schoolName: "Ramakrishna Mission",
       tagline: "Excellence in Education",
       logoUrl: "/placeholder.svg"
@@ -71,6 +71,34 @@ const Navigation = () => {
         logoUrl: data.logoUrl || "/placeholder.svg"
       });
     });
+    
+    // Subscribe to real-time updates
+    const unsubscribe = subscribeToSupabaseChanges('royal-academy-branding', (data: any) => {
+      setBrandingData({
+        schoolName: data.schoolName || "Ramakrishna Mission",
+        tagline: data.tagline || "Excellence in Education",
+        logoUrl: data.logoUrl || "/placeholder.svg"
+      });
+    });
+    
+    // Listen for custom events (fallback for non-Supabase updates)
+    const handleBrandingUpdate = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      if (customEvent.detail) {
+        setBrandingData(prev => ({
+          ...prev,
+          ...customEvent.detail
+        }));
+      }
+    };
+    
+    window.addEventListener('branding-updated', handleBrandingUpdate);
+    
+    // Cleanup
+    return () => {
+      unsubscribe();
+      window.removeEventListener('branding-updated', handleBrandingUpdate);
+    };
   }, []);
 
   useEffect(() => {
@@ -202,7 +230,8 @@ const Navigation = () => {
     { name: t("admissions"), path: "/admissions", icon: GraduationCap, description: t("admissionsDesc") },
     { name: t("gallery"), path: "/gallery", icon: Camera, description: t("galleryDesc") },
     { name: t("topScorers"), path: "/top-scorers", icon: Trophy, description: t("topScorersDesc") },
-    { name: t("events"), path: "/events", icon: Calendar, description: t("eventsDesc") }
+    { name: t("events"), path: "/events", icon: Calendar, description: t("eventsDesc") },
+    { name: t("syllabus"), path: "/syllabus", icon: BookOpen, description: "Curriculum guides and syllabus documents" }
   ];
 
   // Calculate dynamic opacity and blur based on scroll position
